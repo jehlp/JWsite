@@ -1,0 +1,60 @@
+baseurl: ''
+
+collections:
+  essays:
+    output: true
+    permalink: /essays/:title/
+  puzzles:
+    output: true
+    permalink: /puzzles/:title/
+  technical:
+    output: true
+    permalink: /technical/:title/
+defaults:
+- scope:
+    path: ''
+    type: essays
+  values:
+    layout: post
+- scope:
+    path: ''
+    type: puzzles
+  values:
+    layout: post
+- scope:
+    path: ''
+    type: technical
+  values:
+    layout: post
+highlighter: rouge
+
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+      start_line: 1
+markdown: kramdown
+
+navigation:
+- title: Home
+  url: /
+- title: Essays
+  url: /essays/
+- title: Puzzles
+  url: /puzzles/
+- title: Technical
+  url: /technical/
+permalink: /:categories/:title/
+
+plugins:
+- jekyll-feed
+- jekyll-seo-tag
+
+url: ''
+
+webrick:
+  headers:
+    Cache-Control: no-cache, no-store, must-revalidate
+    Expires: 0
+    Pragma: no-cache

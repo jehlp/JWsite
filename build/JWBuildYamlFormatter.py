@@ -1,6 +1,6 @@
 from pathlib import Path
 import yaml
-from JWconst import ansi
+from JWConstants import ansi
 
 def get_sections(content):
     return [line.split(':')[0] for line in content.splitlines() if line and not line.startswith(' ')]

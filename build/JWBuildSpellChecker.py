@@ -1,7 +1,7 @@
 from pathlib import Path
 from spellchecker import SpellChecker
 import re, yaml
-from JWconst import ansi
+from JWConstants import ansi
 
 def check_spelling():
     spell = SpellChecker()
@@ -16,7 +16,7 @@ def check_spelling():
         words = [w for w in re.findall(r'\b[a-zA-Z]+\b', content) if len(w) >= 4]
         misspelled = spell.unknown(words) - jw_site_words
         if misspelled:
-            print(f"{ansi.blue}{ansi.bold}In {file.parent.name}/{file.name}:{ansi.end}")
+            print(f"{ansi.blue}In {file.parent.name}/{file.name}:{ansi.end}")
             for word in misspelled:
                 suggestions = list(spell.candidates(word) or [])[:3]
                 suggest_text = (
@@ -25,5 +25,4 @@ def check_spelling():
                 )
                 print(f"{ansi.red}- {word}{ansi.green}{suggest_text}{ansi.end}")
 
-if __name__ == "__main__":
-    check_spelling()
+if __name__ == "__main__": check_spelling()

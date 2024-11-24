@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import os, venv, subprocess, shutil
+import os
+import venv
+import subprocess
+import shutil
 from pathlib import Path
 from JWConstants import ansi
 
@@ -7,7 +10,8 @@ root = Path(__file__).parent.parent
 venv_dir = root / "build" / "venv"
 requirements = ["pyyaml", "pyspellchecker", "requests"]
 build_dir = root / "build"
-if not venv_dir.exists(): venv.create(venv_dir, with_pip=True)
+if not venv_dir.exists():
+    venv.create(venv_dir, with_pip=True)
 pip = venv_dir / "bin" / "pip"
 python = venv_dir / "bin" / "python"
 os.chdir(root)

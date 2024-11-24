@@ -1,7 +1,11 @@
-from pathlib import Path
 import yaml
 
+def get_config(root):
+    config_path = root / "build/config.yaml"
+    with open(config_path) as f:
+        return yaml.safe_load(f)
+
 def get_md_files(root):
-    with open(root / "build/config.yaml") as f:
-        config = yaml.safe_load(f)
-    return [f for d in config['jw_markdown_dirs'] for f in (root / d).rglob("*.md")]
+    config = get_config(root)
+    md_dirs = config.get('jw_markdown_dirs', [])
+    return [file for md_dir in md_dirs for file in (root / md_dir).rglob("*.md")]

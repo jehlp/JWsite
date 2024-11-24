@@ -1,5 +1,6 @@
 jw_markdown_dirs:
 - _essays
+- _incomplete
 - _puzzles
 - _technical
 jw_site_words:

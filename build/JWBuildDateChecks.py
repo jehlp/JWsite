@@ -10,17 +10,11 @@ def check_dates():
 
     for file in md_files:
         match = re.search(r'(\d{4}-\d{2}-\d{2})', file.name)
-        if not match:
-            print(f"{ansi.yellow}Skipping {file}{ansi.end} - No date found in filename"); continue
+        if not match: print(f"{ansi.yellow}Skipping {file}{ansi.end} - No date found in filename"); continue
         try: file_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
-        except ValueError:
-            print(f"{ansi.red}Invalid date format in filename: {file}{ansi.end}"); continue
-
+        except ValueError: print(f"{ansi.red}Invalid date format in filename: {file}{ansi.end}"); continue
         last_modified = datetime.fromtimestamp(file.stat().st_mtime).date()
-        if file_date != last_modified:
-            print(f"{ansi.yellow}{ansi.bold}Warning:{ansi.end} {file.relative_to(root)} - "
-                  f"Filename date {ansi.red}{file_date}{ansi.end} does not match last modified date "
-                  f"{ansi.yellow}{last_modified}{ansi.end}")
+        if file_date != last_modified: print(f"{ansi.yellow}{ansi.bold}Warning:{ansi.end} {file.relative_to(root)} - Date mismatch {ansi.red}{file_date}{ansi.end} / {ansi.yellow}{last_modified}{ansi.end}")
         else: print(f"{ansi.green}{file.relative_to(root)} - Dates match{ansi.end}")
 
 if __name__ == "__main__": check_dates()

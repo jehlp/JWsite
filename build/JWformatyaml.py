@@ -10,20 +10,16 @@ def format_dict(d):
     return d
 
 def dump_with_spaces(data, file):
-    yaml_str = yaml.dump(data, sort_keys=False, indent=2, allow_unicode=True)
+    yaml_str = yaml.dump(data, sort_keys=False, indent=2, allow_unicode=True, width=120)
     sections = yaml_str.split('\n')
     result = []
-    prev_indent = 0
     for line in sections:
-        curr_indent = len(line) - len(line.lstrip())
-        if curr_indent == 0 and prev_indent == 0 and result and result[-1] != '' and not line.startswith('-'):
-            result.append('')
-        result.append(line)
-        prev_indent = curr_indent
-    new_content = '\n'.join(result).rstrip('\n')
+        if line.strip():
+            result.append(line)
+    new_content = '\n'.join(result)
     current_content = file.read()
     changes = []
-    if new_content.count('\n\n') != current_content.count('\n\n'): changes.append("modified newlines")
+    if new_content.count('\n') != current_content.count('\n'): changes.append("modified newlines")
     if get_sections(new_content) != get_sections(current_content): changes.append("alphabetized sections")
     return (new_content != current_content, new_content, changes)
 

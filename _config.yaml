@@ -1,5 +1,4 @@
 baseurl: ''
-
 collections:
   essays:
     output: true
@@ -27,7 +26,6 @@ defaults:
   values:
     layout: post
 highlighter: rouge
-
 kramdown:
   syntax_highlighter: rouge
   syntax_highlighter_opts:
@@ -35,7 +33,6 @@ kramdown:
       line_numbers: true
       start_line: 1
 markdown: kramdown
-
 navigation:
 - title: Home
   url: /
@@ -46,13 +43,10 @@ navigation:
 - title: Technical
   url: /technical/
 permalink: /:categories/:title/
-
 plugins:
 - jekyll-feed
 - jekyll-seo-tag
-
 url: ''
-
 webrick:
   headers:
     Cache-Control: no-cache, no-store, must-revalidate

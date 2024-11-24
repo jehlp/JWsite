@@ -1,0 +1,15 @@
+######################
+.DS_Store
+**/.DS_Store
+
+#################
+.jekyll-cache/
+_site/
+Gemfile.lock
+
+######################
+venv/
+__pycache__/
+
+########
+logs/

@@ -19,13 +19,8 @@ const buildFootnote = (link, i) => {
 };
 
 const formatUrl = href => {
-    try {
-        const url = new URL(href);
-        return `${url.hostname}${url.pathname}${url.search}`;
-    } catch (e) {
-        console.error('Invalid URL:', href);
-        return href;
-    }
+    try { const url = new URL(href); return `${url.hostname}${url.pathname}${url.search}`; } 
+    catch { return href; }
 };
 
 const buildSection = links => {

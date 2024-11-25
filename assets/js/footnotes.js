@@ -42,9 +42,9 @@ const filterLinks = async () => {
         .then(jsyaml.load)
         .catch(() => ({ blacklist: [] }));
     const isValid = url => !url.startsWith('/') && 
-                          !url.startsWith('#') && 
-                          !url.startsWith(window.location.origin) && 
-                          !config.blacklist.some(domain => url.includes(domain));
+                           !url.startsWith('#') && 
+                           !url.startsWith(window.location.origin) && 
+                           !config.blacklist.some(domain => url.includes(domain));
     const links = document.querySelector('main')?.getElementsByTagName('a') || [];
     return Array.from(links).filter(link => isValid(link.href));
 };

@@ -12,7 +12,7 @@ def format_yaml_structure(data):
         if all(isinstance(item, str) for item in data):
             return sorted(data)
         else:
-            return [format_yaml_structure(x) for x in data]
+            return [format_yaml_structure(item) for item in data]
     else:
         return data
 

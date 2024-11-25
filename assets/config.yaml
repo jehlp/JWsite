@@ -1,0 +1,5 @@
+blacklist:
+  - tinyurl.com
+  - bit.ly
+  - t.co
+  - goo.gl

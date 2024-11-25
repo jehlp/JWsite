@@ -2,6 +2,7 @@ const buildRef = i => {
     const sup = document.createElement('sup');
     const ref = document.createElement('a');
     ref.href = `#fn-${i + 1}`;
+    ref.id = `fn-ref-${i + 1}`;
     ref.className = 'footnote-ref';
     ref.textContent = `[${i + 1}]`;
     sup.appendChild(ref);
@@ -28,6 +29,11 @@ const formatUrl = href => {
     }
 };
 
+const scrollToRef = el => window.scrollTo({
+    top: el.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 4,
+    behavior: 'smooth'
+});
+
 const buildSection = links => {
     const section = document.createElement('div');
     const list = document.createElement('ol');
@@ -37,6 +43,17 @@ const buildSection = links => {
         link.parentNode.insertBefore(buildRef(i), link.nextSibling);
         list.appendChild(buildFootnote(link, i));
     });
+    list.querySelectorAll('.footnote-backref').forEach(ref => 
+        ref.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.getElementById(ref.getAttribute('href').slice(1));
+            if (target) {
+                scrollToRef(target);
+                target.classList.add('highlight');
+                setTimeout(() => target.classList.remove('highlight'), 2000);
+            }
+        })
+    );
     section.appendChild(list);
     return section;
 };

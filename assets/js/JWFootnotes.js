@@ -19,8 +19,13 @@ const buildFootnote = (link, i) => {
 };
 
 const formatUrl = href => {
-    try { const url = new URL(href); return `${url.hostname}${url.pathname}${url.search}`; } 
-    catch { return href; }
+    try {
+        const url = new URL(href);
+        const path = url.pathname.replace(/\/+$/, '');
+        return `${url.hostname.replace(/^www\./, '')}${path}${url.search === '?' ? '' : url.search}`;
+    } catch { 
+        return href.replace(/\/+$/, ''); 
+    }
 };
 
 const buildSection = links => {

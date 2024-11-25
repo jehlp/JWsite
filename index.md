@@ -5,7 +5,7 @@ title: Home
 ## The Site
 Over the past 15 years, I have been known for my involvement with rhythm games, international puzzle competitions, and anime reviews. I also have an academic background in mathematics (probability theory) and an active professional background in software engineering. 
 
-I intend to post everything from the logic puzzles I construct for tournaments, to essays elucidating why fans of the *Muv-Luv* saga should try reading *The Fifth Head of Cerberus*, to code that I might find particularly interesting or useful.
+I intend to post everything from the logic puzzles I construct, to essays elucidating why fans of the *Muv-Luv* saga should try reading *The Fifth Head of Cerberus*, to code that I might find particularly interesting or useful.
 
 ## Recent Posts
 {% assign all_posts = '' | split: '' %}

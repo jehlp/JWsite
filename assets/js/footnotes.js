@@ -40,11 +40,11 @@ const filterLinks = async () => {
     const config = await fetch('/assets/config.yaml')
         .then(r => r.text())
         .then(jsyaml.load)
-        .catch(() => ({ jw_footnote_blacklist: [] }));
+        .catch(() => ({ jw_footnotes_blacklist: [] }));
     const isValid = url => !url.startsWith('/') && 
                            !url.startsWith('#') && 
                            !url.startsWith(window.location.origin) && 
-                           !config.jw_footnote_blacklist.some(domain => url.includes(domain));
+                           !config.jw_footnotes_blacklist.some(domain => url.includes(domain));
     const links = document.querySelector('main')?.getElementsByTagName('a') || [];
     return Array.from(links).filter(link => isValid(link.href));
 };

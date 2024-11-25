@@ -5,18 +5,18 @@ from JWConstants import ansi
 def get_sections(content):
     return [line.split(':')[0] for line in content.splitlines() if line and not line.startswith(' ')]
 
-def format_dict(d):
-    if isinstance(d, dict):
-        return {k: format_dict(d[k]) for k in sorted(d)}
-    elif isinstance(d, list):
-        if all(isinstance(x, str) for x in d):
-            return sorted(d)
+def format_yaml_structure(data):
+    if isinstance(data, dict):
+        return {key: format_yaml_structure(data[key]) for key in sorted(data)}
+    elif isinstance(data, list):
+        if all(isinstance(item, str) for item in data):
+            return sorted(data)
         else:
-            return [format_dict(x) for x in d]
+            return [format_yaml_structure(x) for x in data]
     else:
-        return d
+        return data
 
-def dump_with_spaces(data, file):
+def compare_and_format_yaml(data, file):
     yaml_str = yaml.dump(data, sort_keys=False, indent=2, allow_unicode=True, width=120)
     new_content = '\n'.join(line for line in yaml_str.splitlines() if line.strip())
     current_content = file.read()
@@ -34,7 +34,7 @@ def format_yaml():
         with open(file) as f:
             data = yaml.safe_load(f)
         with open(file) as f:
-            needs_format, new_content, changes = dump_with_spaces(format_dict(data), f)
+            needs_format, new_content, changes = compare_and_format_yaml(format_yaml_structure(data), f)
         status = f"{ansi.yellow}reformatted ({', '.join(changes)}){ansi.end}" if changes else f"{ansi.green}no issues{ansi.end}"
         print(f"{ansi.blue}Formatting {file.relative_to(root)}{ansi.end} - {status}")
         if needs_format:

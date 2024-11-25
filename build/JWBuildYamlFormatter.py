@@ -29,7 +29,7 @@ def compare_and_format_yaml(data, file):
 
 def format_yaml():
     root = Path(__file__).parent.parent
-    yaml_files = list(root.rglob("*.yaml")) + list(root.rglob("*.yml"))
+    yaml_files = [f for f in list(root.rglob("*.yaml")) + list(root.rglob("*.yml")) if '_site' not in f.parts]
     for file in yaml_files:
         with open(file) as f:
             data = yaml.safe_load(f)

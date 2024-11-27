@@ -1,21 +1,21 @@
-const buildRef = i => {
+const buildRef = index => {
     const sup = document.createElement('sup');
     const ref = document.createElement('a');
-    ref.href = `#fn-${i + 1}`;
-    ref.id = `fn-ref-${i + 1}`;
+    ref.href = `#fn-${index + 1}`;
+    ref.id = `fn-ref-${index + 1}`;
     ref.className = 'footnote-ref';
-    ref.textContent = `[${i + 1}]`;
+    ref.textContent = `[${index + 1}]`;
     sup.appendChild(ref);
     return sup;
 };
 
-const buildFootnote = (link, i) => {
+const buildFootnote = (link, index) => {
     const item = document.createElement('li');
     const url = formatUrl(link.href);
-    item.id = `fn-${i + 1}`;
+    item.id = `fn-${index + 1}`;
     item.innerHTML = `<span class="footnote-text">${link.textContent}</span>
         <a href="${link.href}" class="footnote-url" target="_blank" rel="noopener noreferrer">${url}</a>
-        <a href="#fn-ref-${i + 1}" class="footnote-backref">↩</a>`;
+        <a href="#fn-ref-${index + 1}" class="footnote-backref">↩</a>`;
     return item;
 };
 
@@ -39,9 +39,9 @@ const buildSection = links => {
     const list = document.createElement('ol');
     section.className = 'footnotes';
     section.innerHTML = '<h2>References</h2>';
-    links.forEach((link, i) => {
-        link.parentNode.insertBefore(buildRef(i), link.nextSibling);
-        list.appendChild(buildFootnote(link, i));
+    links.forEach((link, index) => {
+        link.parentNode.insertBefore(buildRef(index), link.nextSibling);
+        list.appendChild(buildFootnote(link, index));
     });
     list.querySelectorAll('.footnote-backref').forEach(ref => 
         ref.addEventListener('click', e => {

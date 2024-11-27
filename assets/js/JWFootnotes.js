@@ -1,22 +1,22 @@
 const buildRef = index => {
-    const sup = document.createElement('sup');
+    const superscript = document.createElement('sup');
     const ref = document.createElement('a');
     ref.href = `#fn-${index + 1}`;
     ref.id = `fn-ref-${index + 1}`;
     ref.className = 'footnote-ref';
     ref.textContent = `[${index + 1}]`;
-    sup.appendChild(ref);
+    superscript.appendChild(ref);
     return sup;
 };
 
 const buildFootnote = (link, index) => {
-    const item = document.createElement('li');
+    const listItem = document.createElement('li');
     const url = formatUrl(link.href);
-    item.id = `fn-${index + 1}`;
-    item.innerHTML = `<span class="footnote-text">${link.textContent}</span>
+    listItem.id = `fn-${index + 1}`;
+    listItem.innerHTML = `<span class="footnote-text">${link.textContent}</span>
         <a href="${link.href}" class="footnote-url" target="_blank" rel="noopener noreferrer">${url}</a>
         <a href="#fn-ref-${index + 1}" class="footnote-backref">↩</a>`;
-    return item;
+    return listItem;
 };
 
 const formatUrl = href => {
@@ -29,8 +29,8 @@ const formatUrl = href => {
     }
 };
 
-const scrollToRef = el => window.scrollTo({
-    top: el.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 4,
+const scrollToRef = element => window.scrollTo({
+    top: element.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 4,
     behavior: 'smooth'
 });
 
@@ -60,7 +60,7 @@ const buildSection = links => {
 
 const filterLinks = async () => {
     const config = await fetch('/assets/config.yaml')
-        .then(r => r.text())
+        .then(response => response.text())
         .then(jsyaml.load)
         .catch(() => ({ jw_footnotes_blacklist: [] }));
     const isValid = url => !url.startsWith('/') && 

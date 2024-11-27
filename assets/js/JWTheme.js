@@ -1,7 +1,7 @@
 const updateTheme = (theme) => {
     document.documentElement.setAttribute('data-theme', theme);
-    const icon = document.querySelector('.theme-toggle i');
-    if (icon) icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    const themeIcon = document.querySelector('.theme-toggle i');
+    if (themeIcon) themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 }
  
 const toggleTheme = () => {

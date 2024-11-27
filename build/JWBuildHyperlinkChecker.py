@@ -7,8 +7,8 @@ from JWUtils import get_md_files
 def extract_hyperlinks(content):
     return re.findall(r'\[.*?\]\(.*?\)', content)
 
-def validate_hyperlink(file, link):
-    text, url = re.search(r'\[(.*?)\]\((.*?)\)', link).groups()
+def validate_hyperlink(file, hyperlink):
+    text, url = re.search(r'\[(.*?)\]\((.*?)\)', hyperlink).groups()
     if not url:
         print(f"{ansi.yellow}{ansi.bold}Warning: {ansi.end}{file} - Missing URL in hyperlink")
         return False
@@ -18,13 +18,13 @@ def validate_hyperlink(file, link):
     return True
 
 def check_hyperlink(file, link, root):
-    text, url = re.search(r'\[(.*?)\]\((.*?)\)', link).groups()
+    link_text, url = re.search(r'\[(.*?)\]\((.*?)\)', link).groups()
     try:
         response = requests.head(url)
         if response.status_code >= 400:
-            print(f"{ansi.red}{file.relative_to(root)} - Inactive link: {text} ({url}){ansi.end}")
+            print(f"{ansi.red}{file.relative_to(root)} - Inactive link: {link_text} ({url}){ansi.end}")
     except requests.exceptions.RequestException:
-        print(f"{ansi.red}{file.relative_to(root)} - Error checking link: {text} ({url}){ansi.end}")
+        print(f"{ansi.red}{file.relative_to(root)} - Error checking link: {link_text} ({url}){ansi.end}")
 
 def check_hyperlinks():
     root = Path(__file__).parent.parent

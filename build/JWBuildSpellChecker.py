@@ -13,7 +13,8 @@ def extract_words(content):
 def print_file_header(file):
     print(f"\n{ansi.blue}In {file.parent.name}/{file.name}:{ansi.end}")
 
-def identify_proper_nouns(words, spell_checker):
+def identify_proper_nouns(words):
+    spell_checker = SpellChecker()
     return {word for word in words if word[0].isupper() and word not in spell_checker.known([word])}
 
 def print_proper_nouns(proper_nouns):
@@ -34,12 +35,18 @@ def print_misspelled_words(misspelled):
             suggestion_text = f" → {', '.join(suggestions)}" if suggestions else f" → {ansi.yellow}no suggestions{ansi.end}"
             print(f"{ansi.red}- {word}{ansi.green}{suggestion_text}{ansi.end}")
 
-def analyze_file_words(file_words, jw_site_words):
+def categorize_invalid_words(file_words, jw_site_words):
     spell_checker = SpellChecker()
     original_case_map = {word.lower(): word for word in file_words}
-    unknown_words = {original_case_map[word] for word in spell_checker.unknown_words([word.lower() for word in file_words]) if original_case_map[word].lower() not in jw_site_words}
-    proper_nouns = identify_proper_nouns(unknown_words, spell_checker)
-    return proper_nouns, unknown_words - proper_nouns
+    lower_words = [word.lower() for word in file_words]
+    unrecognized_words = spell_checker.unknown(lower_words)
+    invalid_words = set()
+    for word in unrecognized_words:
+        original_case_word = original_case_map[word]
+        if original_case_word.lower() not in jw_site_words:
+            invalid_words.add(original_case_word)
+    proper_nouns = identify_proper_nouns(invalid_words)
+    return proper_nouns, invalid_words - proper_nouns
 
 def check_spelling():
     root = Path(__file__).parent.parent
@@ -50,7 +57,7 @@ def check_spelling():
         with open(file) as f:
             content = remove_code_blocks(f.read())
             words = extract_words(content)
-            proper_nouns, misspelled = analyze_file_words(words, jw_site_words)
+            proper_nouns, misspelled = categorize_invalid_words(words, jw_site_words)
             if proper_nouns or misspelled:
                 print_file_header(file)
                 print_proper_nouns(proper_nouns)

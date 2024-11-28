@@ -6,7 +6,7 @@ const buildRef = index => {
     ref.className = 'footnote-ref';
     ref.textContent = `[${index + 1}]`;
     superscript.appendChild(ref);
-    return sup;
+    return superscript;
 };
 
 const buildFootnote = (link, index) => {

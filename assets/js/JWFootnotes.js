@@ -44,8 +44,8 @@ const buildSection = links => {
         list.appendChild(buildFootnote(link, index));
     });
     list.querySelectorAll('.footnote-backref').forEach(ref => 
-        ref.addEventListener('click', e => {
-            e.preventDefault();
+        ref.addEventListener('click', event => {
+            event.preventDefault();
             const target = document.getElementById(ref.getAttribute('href').slice(1));
             if (target) {
                 scrollToRef(target);

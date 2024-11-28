@@ -30,8 +30,8 @@ def check_hyperlinks():
     root = Path(__file__).parent.parent
     md_files = get_md_files(root)
     for file in md_files:
-        with open(file, 'r') as f:
-            content = f.read()
+        with open(file, 'r') as file_handle:
+            content = file_handle.read()
         hyperlinks = extract_hyperlinks(content)
         for link in hyperlinks:
             if validate_hyperlink(file, link):

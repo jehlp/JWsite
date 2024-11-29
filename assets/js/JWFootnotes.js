@@ -73,7 +73,9 @@ const filterLinks = async () => {
 
 const addFootnotes = async () => {
     const links = await filterLinks();
-    if (links.length) document.querySelector('main')?.appendChild(buildSection(links));
+    if (links.length) {
+        document.querySelector('main')?.appendChild(buildSection(links));
+    }
 };
 
 document.addEventListener('DOMContentLoaded', addFootnotes);

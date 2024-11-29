@@ -1,14 +1,14 @@
 from pathlib import Path
 from spellchecker import SpellChecker
 import re
-from JWConstants import ansi
+from JWConstants import ansi, regex
 from JWUtils import get_md_files, get_config
 
 def remove_code_blocks(content):
-    return re.sub(r'`[^`]*`', '', re.sub(r'```[\s\S]*?```', '', content))
+    return re.sub(regex.inline_code, '', re.sub(regex.code_block, '', content))
 
 def extract_words(content):
-    return [word for word in re.findall(r"\b[a-zA-Z']+\b", content) if len(word) >= 4]
+    return [word for word in re.findall(regex.word, content) if len(word) >= 4]
 
 def print_file_header(file):
     print(f"\n{ansi.blue}In {file.parent.name}/{file.name}:{ansi.end}")

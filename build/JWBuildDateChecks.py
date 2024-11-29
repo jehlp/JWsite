@@ -1,11 +1,11 @@
 from pathlib import Path
 import re
 from datetime import datetime
-from JWConstants import ansi
+from JWConstants import ansi, regex
 from JWUtils import get_md_files
 
 def extract_date_from_filename(filename):
-    date_match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
+    date_match = re.search(regex.filename_date, filename)
     if not date_match:
         return None
     try:

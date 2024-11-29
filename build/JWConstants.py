@@ -12,3 +12,11 @@ class ansi:
     black = '\033[90m'
     blink = '\033[5m'
     invert = '\033[7m'
+
+class regex:
+    hyperlink = r'\[(.*?)\]\((.*?)\)'
+    code_block = r'```[\s\S]*?```'
+    inline_code = r'`[^`]*`'
+    url = r'^https?://\S+$'
+    word = r"\b[a-zA-Z']+\b"
+    filename_date = r'(\d{4}-\d{2}-\d{2})'

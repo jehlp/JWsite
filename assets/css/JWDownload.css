@@ -1,0 +1,54 @@
+/* Download section styles */
+.download-pdf {
+    margin-top: 4rem;
+    padding-top: 0.5rem;
+    border-top: 2px solid var(--accent-color);
+    position: relative;
+}
+
+.download-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.download-button h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+}
+
+.download-button i {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.download-pdf:hover .download-button i,
+.download-pdf:hover .download-button h2 {
+    color: var(--link-hover);
+}
+
+/* Print-specific styles */
+@media print {
+    @page {
+        margin: 2cm;
+    }
+
+    nav, footer, .theme-toggle, .download-pdf {
+        display: none !important;
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        page-break-inside: avoid !important;
+        font-size: 0.85em !important;
+    }
+
+    .highlight .lineno,
+    .highlight td.gutter {
+        display: none !important;
+    }
+}

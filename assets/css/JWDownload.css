@@ -1,52 +1,56 @@
-.download-pdf {
-    margin-top: 4rem;
-    padding-top: 0.5rem;
-    border-top: 2px solid var(--accent-color);
-    position: relative;
-}
-
 .download-button {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease;  
 }
 
-.download-button h2 {
-    font-size: 1.2rem;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+.download-button span {
+    font-size: 0.95rem;
     color: var(--accent-color);
+    transition: color 0.2s ease;
 }
 
 .download-button i {
-    font-size: 1.2rem;
+    font-size: 0.95rem;  
     color: var(--accent-color);
+    transition: color 0.2s ease;
 }
 
-.download-pdf:hover .download-button i,
-.download-pdf:hover .download-button h2 {
+.download-button:hover i,
+.download-button:hover span {
     color: var(--link-hover);
 }
 
-@media print {
-    @page {
-        margin: 2cm;
-    }
-
-    nav, footer, .theme-toggle, .download-pdf {
-        display: none !important;
-    }
-
-    pre {
-        white-space: pre-wrap !important;
-        word-wrap: break-word !important;
-        page-break-inside: avoid !important;
-        font-size: 0.85em !important;
-    }
-
-    .highlight .lineno,
-    .highlight td.gutter {
-        display: none !important;
-    }
+.pdf-container body {
+    font-size: 12pt;
+    color: #333333;
+    background: #ffffff;
+}
+.pdf-container h1, .pdf-container h2, .pdf-container h3, .pdf-container h4, .pdf-container h5, .pdf-container h6 {
+    color: #1a1a1a;
+}
+.pdf-container h1 {
+    font-size: 24pt;
+    margin-bottom: 20pt;
+}
+.pdf-container h2 {
+    font-size: 18pt;
+    margin-top: 16pt;
+}
+.pdf-container p {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #333333;
+}
+.pdf-container a {
+    color: #4a4a4a;
+    text-decoration: underline;
+}
+.pdf-container blockquote {
+    border-left: 3px solid #666666;
+    color: #333333;
+    padding: 10pt;
+    margin: 12pt 0;
 }

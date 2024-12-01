@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ '/assets/css/JWMain.css' | relative_url }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Work+Sans:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     {% seo %}
 </head>
 <body>
@@ -26,8 +26,15 @@
         {{ content }}
     </main>
     <footer>
-        <p>&copy; {{ site.time | date: '%Y' }} {{ site.author }}</p>
+        <div class="footer-content">
+            <div class="download-button">
+                <i class="fas fa-file-pdf"></i>
+                <span>Download PDF</span>
+            </div>
+        </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <script src="{{ '/assets/js/JWTheme.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/JWFootnotes.js' | relative_url }}"></script>

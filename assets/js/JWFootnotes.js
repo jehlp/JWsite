@@ -41,7 +41,7 @@ const buildSection = (links) => {
     const section = document.createElement('div');
     const list = document.createElement('ol');
     section.className = 'footnotes';
-    section.innerHTML = '<h2><i class="fas fa-book"></i> References</h2>';
+    section.innerHTML = '<h2>References</h2>';
     links.forEach((link, index) => {
         const ref = buildRef(index);
         link.parentNode.insertBefore(ref, link.nextSibling);

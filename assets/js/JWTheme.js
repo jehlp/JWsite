@@ -4,15 +4,21 @@ const updateTheme = (theme) => {
     if (themeIcon) {
         themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
     }
-}
- 
+};
+
 const toggleTheme = () => {
-    const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     localStorage.setItem('theme', newTheme);
     updateTheme(newTheme);
-}
- 
-updateTheme(localStorage.getItem('theme') || 'dark');
-document.addEventListener('DOMContentLoaded', () => 
-    document.querySelector('.theme-toggle')?.addEventListener('click', toggleTheme)
-);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleButton = document.querySelector('.theme-toggle');
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            toggleTheme();
+        });
+    }
+});

@@ -1,4 +1,4 @@
-const buildRef = index => {
+const buildRef = (index) => {
     const superscript = document.createElement('sup');
     const ref = document.createElement('a');
     ref.href = `#fn-${index + 1}`;
@@ -19,63 +19,78 @@ const buildFootnote = (link, index) => {
     return listItem;
 };
 
-const formatUrl = href => {
+const formatUrl = (href) => {
     try {
         const url = new URL(href);
         const path = url.pathname.replace(/\/+$/, '');
-        return `${url.hostname.replace(/^www\./, '')}${path}${url.search === '?' ? '' : url.search}`;
-    } catch { 
-        return href.replace(/\/+$/, ''); 
+        const formattedUrl = `${url.hostname.replace(/^www\./, '')}${path}`;
+        return url.search !== '?' ? `${formattedUrl}${url.search}` : formattedUrl;
+    } catch {
+        return href.replace(/\/+$/, '');
     }
 };
 
-const scrollToRef = element => window.scrollTo({
-    top: element.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 4,
-    behavior: 'smooth'
-});
+const scrollToRef = (element) => {
+    window.scrollTo({
+        top: element.getBoundingClientRect().top + window.pageYOffset - window.innerHeight / 4,
+        behavior: 'smooth'
+    });
+};
 
-const buildSection = links => {
+const buildSection = (links) => {
     const section = document.createElement('div');
     const list = document.createElement('ol');
     section.className = 'footnotes';
-    section.innerHTML = '<h2>References</h2>';
+    section.innerHTML = '<h2><i class="fas fa-book"></i> References</h2>';
     links.forEach((link, index) => {
-        link.parentNode.insertBefore(buildRef(index), link.nextSibling);
-        list.appendChild(buildFootnote(link, index));
+        const ref = buildRef(index);
+        link.parentNode.insertBefore(ref, link.nextSibling);
+        const footnote = buildFootnote(link, index);
+        list.appendChild(footnote);
     });
-    list.querySelectorAll('.footnote-backref').forEach(ref => 
-        ref.addEventListener('click', event => {
+    list.querySelectorAll('.footnote-backref').forEach((ref) => {
+        ref.addEventListener('click', (event) => {
             event.preventDefault();
             const target = document.getElementById(ref.getAttribute('href').slice(1));
             if (target) {
                 scrollToRef(target);
                 target.classList.add('highlight');
-                setTimeout(() => target.classList.remove('highlight'), 2000);
+                setTimeout(() => {
+                    target.classList.remove('highlight');
+                }, 2000);
             }
-        })
-    );
+        });
+    });
     section.appendChild(list);
     return section;
 };
 
 const filterLinks = async () => {
     const config = await fetch('/assets/config.yaml')
-        .then(response => response.text())
+        .then((response) => response.text())
         .then(jsyaml.load)
         .catch(() => ({ jw_footnotes_blacklist: [] }));
-    const isValid = url => !url.startsWith('/') && 
-                           !url.startsWith('#') && 
-                           !url.startsWith(window.location.origin) && 
-                           !config.jw_footnotes_blacklist.some(domain => url.includes(domain));
+    const isValid = (url) => {
+        if (url.startsWith(window.location.origin)) {
+            return false;
+        }
+        return !config.jw_footnotes_blacklist.some(domain => url.includes(domain));
+    };
     const links = document.querySelector('main')?.getElementsByTagName('a') || [];
-    return Array.from(links).filter(link => isValid(link.href));
+    return Array.from(links).filter((link) => isValid(link.href));
 };
 
 const addFootnotes = async () => {
     const links = await filterLinks();
-    if (links.length) {
-        document.querySelector('main')?.appendChild(buildSection(links));
+    if (links.length > 0) {
+        const section = buildSection(links);
+        const mainElement = document.querySelector('main');
+        if (mainElement) {
+            mainElement.appendChild(section);
+        }
     }
 };
 
-document.addEventListener('DOMContentLoaded', addFootnotes);
+document.addEventListener('DOMContentLoaded', () => {
+    addFootnotes();
+});

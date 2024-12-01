@@ -43,7 +43,10 @@ const addCopyButtonsToCodeBlocks = () => {
         const copyButton = createCopyButton();
         wrapper.appendChild(copyButton);
         copyButton.addEventListener('click', () => {
-            navigator.clipboard.writeText(code.textContent).then(() => {
+            const clonedPre = pre.cloneNode(true);
+            clonedPre.querySelectorAll('.lineno').forEach((lineNumber) => lineNumber.remove());
+            const codeWithoutLineNumbers = clonedPre.textContent;
+            navigator.clipboard.writeText(codeWithoutLineNumbers).then(() => {
                 copyButton.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => {
                     copyButton.innerHTML = '<i class="fas fa-copy"></i>';

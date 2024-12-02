@@ -123,10 +123,16 @@ class ClickableTooltip {
                 selector: 'a[href]',
                 description: element => {
                     const url = new URL(element.href);
+                    const textContent = element.textContent.trim();
+                    const hasAlphabets = /[a-zA-Z]/.test(textContent);
+    
                     if (url.host === window.location.host) {
-                        return element.hash
-                            ? `<i class="fas fa-location-arrow"></i> Jump to section "${element.textContent}"`
-                            : `<i class="fas fa-link"></i> Navigating within the site to <strong>${url.pathname}</strong>`;
+                        if (element.hash) {
+                            return hasAlphabets
+                                ? `<i class="fas fa-location-arrow"></i> Jump to section "${textContent}"`
+                                : `<i class="fas fa-location-arrow"></i> Jump`;
+                        }
+                        return `<i class="fas fa-link"></i> Navigating within the site to <strong>${url.pathname}</strong>`;
                     }
                     return `<i class="fas fa-external-link-alt"></i> Navigate to external site: <strong>${url.href}</strong>`;
                 },
@@ -139,6 +145,10 @@ class ClickableTooltip {
                         ? '<i class="fas fa-moon"></i> Swap to dark mode'
                         : '<i class="fas fa-sun"></i> Swap to light mode';
                 },
+            },
+            {
+                selector: '.copy-button',
+                description: () => '<i class="fas fa-copy"></i> Click to copy the code block',
             },
         ];
     }    

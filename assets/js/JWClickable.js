@@ -85,7 +85,7 @@ class ClickableTooltip {
                 const description = this.getElementDescription(element);
                 this.showTooltip(description);
             }
-        }, 1500);
+        }, 3000);
     }
 
     handleMouseLeave() {

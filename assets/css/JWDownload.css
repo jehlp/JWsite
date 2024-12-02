@@ -3,7 +3,7 @@
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
-    transition: color 0.2s ease;  
+    transition: color 0.2s ease;
 }
 
 .download-button span {
@@ -13,7 +13,7 @@
 }
 
 .download-button i {
-    font-size: 0.95rem;  
+    font-size: 0.95rem;
     color: var(--accent-color);
     transition: color 0.2s ease;
 }
@@ -23,34 +23,60 @@
     color: var(--link-hover);
 }
 
-.pdf-container body {
-    font-size: 12pt;
-    color: #333333;
-    background: #ffffff;
+.pdf-content {
+    --bg-color: #ffffff !important;
+    --text-color: #333333 !important;
+    --heading-color: #1a1a1a !important;
+    --accent-color: #666666 !important;
+    --link-color: #4a4a4a !important;
+    --link-hover: #000000 !important;
+    --border-color: #e0e0e0 !important;
+    --code-bg: #f5f5f5 !important;
+    background-color: #ffffff !important;
+    color: #333333 !important;
 }
-.pdf-container h1, .pdf-container h2, .pdf-container h3, .pdf-container h4, .pdf-container h5, .pdf-container h6 {
-    color: #1a1a1a;
+
+.pdf-content h1,
+.pdf-content h2,
+.pdf-content h3,
+.pdf-content h4,
+.pdf-content h5,
+.pdf-content h6 {
+    color: #1a1a1a !important;
 }
-.pdf-container h1 {
-    font-size: 24pt;
-    margin-bottom: 20pt;
+
+.pdf-content p,
+.pdf-content li {
+    color: #333333 !important;
 }
-.pdf-container h2 {
-    font-size: 18pt;
-    margin-top: 16pt;
+
+.pdf-container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    z-index: -9999;
+    opacity: 0;
+    pointer-events: none;
+    padding: 40px;
 }
-.pdf-container p {
-    font-size: 12pt;
-    line-height: 1.5;
-    color: #333333;
+
+.formatted-code-block {
+    font-family: var(--mono-font);
+    font-size: 10pt;
+    display: block;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 1em 0;
+    color: inherit;
+    background-color: var(--code-bg);
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
 }
-.pdf-container a {
-    color: #4a4a4a;
-    text-decoration: underline;
-}
-.pdf-container blockquote {
-    border-left: 3px solid #666666;
-    color: #333333;
-    padding: 10pt;
-    margin: 12pt 0;
+
+.formatted-inline-code {
+    font-family: var(--mono-font);
+    font-size: 10pt;
 }

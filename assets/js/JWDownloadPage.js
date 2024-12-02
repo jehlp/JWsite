@@ -1,115 +1,116 @@
 const { jsPDF } = window.jspdf;
 
-const createPDFContent = () => {
-    const content = document.querySelector('main').cloneNode(true);
+const formatCodeBlock = (pre) => {
+    if (pre.parentNode === null) {
+        return;
+    }
+    pre.querySelectorAll('.lineno').forEach((lineNumber) => lineNumber.remove());
+    const span = document.createElement('span');
+    span.textContent = pre.textContent || pre.innerText;
+    span.classList.add('formatted-code-block');
+    pre.parentNode.replaceChild(span, pre);
+};
+
+const formatInlineCode = (code) => {
+    const span = document.createElement('span');
+    span.textContent = code.textContent || code.innerText;
+    span.classList.add('formatted-inline-code');
+    code.parentNode.replaceChild(span, code);
+};
+
+const preparePDFContent = () => {
     const container = document.createElement('div');
-    container.classList.add('pdf-container');
+    container.classList.add('pdf-container', 'pdf-content');
+    const content = document.querySelector('main').cloneNode(true);
+    ['.theme-toggle', '.download-button', 'nav', 'footer', '.copy-button'].forEach((selector) =>
+        content.querySelectorAll(selector).forEach((element) => element.remove())
+    );
+    content.querySelectorAll('pre').forEach(formatCodeBlock);
+    content.querySelectorAll('code:not(pre code)').forEach(formatInlineCode);
     container.appendChild(content);
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    content.setAttribute('data-theme', currentTheme);
-    const removableElements = ['.theme-toggle', '.download-button', 'nav', 'footer', '.copy-button'];
-    removableElements.forEach((selector) => {
-        content.querySelectorAll(selector).forEach((element) => element.remove());
-    });
     return container;
 };
 
-const handleCodeBlocks = (content) => {
-    content.querySelectorAll('pre').forEach((pre) => {
-        if (pre.parentNode) {
-            pre.querySelectorAll('.lineno').forEach((lineNumber) => lineNumber.remove());
-            const span = document.createElement('span');
-            span.textContent = pre.textContent || pre.innerText;
-            span.style.cssText = `
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 10pt;
-                display: block;
-                white-space: pre-wrap;
-                word-wrap: break-word;
-                margin: 1em 0;
-                color: inherit;
-                background: none;
-            `;
-            pre.parentNode.replaceChild(span, pre);
+const captureContent = async (content) => {
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    return html2canvas(content, {
+        scale: 2,
+        useCORS: true,
+        letterRendering: true,
+        scrollX: -50,
+        scrollY: 0,
+        width: 1000,
+        windowWidth: 1000,
+        backgroundColor: '#ffffff',
+        onclone: (doc) => {
+            const clone = doc.querySelector('.pdf-content');
+            clone.style.opacity = '1';
+            clone.style.position = 'static';
+            clone.style.backgroundColor = '#ffffff';
         }
     });
 };
 
-const handleInlineCode = (content) => {
-    content.querySelectorAll('code:not(pre code)').forEach((code) => {
-        const span = document.createElement('span');
-        span.textContent = code.textContent || code.innerText;
-        span.style.cssText = `
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 10pt;
-        `;
-        code.parentNode.replaceChild(span, code);
-    });
-};
-
-const captureContentToCanvas = async (content) => {
-    return await html2canvas(content, {
-        scale: 2,
-        useCORS: true,
-        letterRendering: true,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: content.offsetWidth,
-        logging: false,
-        backgroundColor: '#ffffff'
-    });
-};
-
-const addImagesToPDF = (pdf, canvas, pdfWidth, pdfHeight, pageWidth, pageHeight) => {
-    let remainingHeight = pdfHeight;
-    let currentPage = 1;
-    while (remainingHeight > pageHeight - 80) {
-        pdf.addPage();
+const addPDFPages = (pdf, canvas, dims) => {
+    let remainingHeight = dims.contentHeight;
+    let currentPage = 0;
+    while (remainingHeight > 0) {
+        if (currentPage > 0) {
+            pdf.addPage();
+        }
         pdf.addImage(
             canvas.toDataURL('image/jpeg', 1.0),
             'JPEG',
-            40,
-            40 - (pageHeight - 80) * currentPage,
-            pdfWidth,
-            pdfHeight,
+            dims.margin,
+            dims.margin - (dims.pageHeight - dims.margin * 2) * currentPage,
+            dims.contentWidth,
+            dims.contentHeight,
             null,
             'FAST'
         );
-        remainingHeight -= (pageHeight - 80);
-        currentPage++;
+        remainingHeight -= dims.pageHeight - dims.margin * 2;
+        currentPage += 1;
     }
 };
 
+const createPDF = async (content) => {
+    const canvas = await captureContent(content);
+    const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'pt',
+        format: 'a4',
+        putOnlyUsedFonts: true,
+        compress: true
+    });
+    const dims = {
+        margin: 40,
+        pageWidth: pdf.internal.pageSize.getWidth(),
+        pageHeight: pdf.internal.pageSize.getHeight()
+    };
+    dims.contentWidth = dims.pageWidth - dims.margin * 2;
+    dims.contentHeight = dims.contentWidth / (canvas.width / canvas.height);
+    addPDFPages(pdf, canvas, dims);
+    return pdf;
+};
+
 const downloadAsPDF = async () => {
-    const content = createPDFContent();
-    handleCodeBlocks(content);
-    handleInlineCode(content);
     const originalTitle = document.title;
-    const newTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : originalTitle;
-    document.title = newTitle;
-    document.body.appendChild(content);
-    const canvas = await captureContentToCanvas(content);
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4', putOnlyUsedFonts: true, compress: true });
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const pdfWidth = pageWidth - 80;
-    const pdfHeight = pdfWidth / (canvas.width / canvas.height);
-    pdf.addImage(
-        canvas.toDataURL('image/jpeg', 1.0),
-        'JPEG',
-        40,
-        40,
-        pdfWidth,
-        pdfHeight,
-        null,
-        'FAST'
-    );
-    if (pdfHeight > pageHeight - 80) {
-        addImagesToPDF(pdf, canvas, pdfWidth, pdfHeight, pageWidth, pageHeight);
+    const mainHeading = document.querySelector('h1');
+    const newTitle = mainHeading ? mainHeading.textContent : originalTitle;
+    try {
+        const content = preparePDFContent();
+        document.body.appendChild(content);
+        document.title = newTitle;
+        const pdf = await createPDF(content);
+        pdf.save(`${document.title}.pdf`);
+        document.body.removeChild(content);
+        document.title = originalTitle;
+    } catch (error) {
+        const content = document.querySelector('.pdf-content');
+        if (content) {
+            document.body.removeChild(content);
+        }
     }
-    pdf.save(`${document.title}.pdf`);
-    document.body.removeChild(content);
-    document.title = originalTitle;
 };
 
 document.addEventListener('DOMContentLoaded', () => {

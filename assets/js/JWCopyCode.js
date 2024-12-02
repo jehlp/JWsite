@@ -1,20 +1,6 @@
 const createCopyButton = () => {
     const button = document.createElement('button');
     button.classList.add('copy-button');
-    button.style.cssText = `
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        background: var(--accent-color);
-        color: #fff;
-        border: none;
-        border-radius: 3px;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-    `;
     const icon = document.createElement('i');
     icon.classList.add('fas', 'fa-copy');
     button.appendChild(icon);
@@ -56,6 +42,6 @@ const addCopyButtonsToCodeBlocks = () => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     addCopyButtonsToCodeBlocks();
 });

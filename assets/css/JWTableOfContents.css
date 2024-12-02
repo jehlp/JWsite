@@ -1,0 +1,65 @@
+main {
+    position: relative;
+    width: 100%;
+}
+
+.toc-container {
+    float: right;
+    width: 250px;
+    margin: 0 0 1rem 1.5rem;
+    padding: 1rem;
+    background: var(--bg-color);
+    border: 3px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: var(--serif-font);
+}
+
+.toc-container h2 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--heading-color);
+}
+
+.toc-container ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-container ol ol {
+    padding-left: 1.5rem;
+}
+
+.toc-container li {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    font-style: italic; 
+    color: var(--text-color);
+}
+
+.toc-container a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    font-style: italic; 
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.toc-container a:hover {
+    color: var(--link-hover);
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.alongside-toc {
+    margin-right: calc(250px + 1.5rem);
+}
+
+.after-toc {
+    clear: both;
+    width: 100%;
+}

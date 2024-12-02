@@ -15,23 +15,51 @@ const ensureHeadingId = (heading) => {
     }
 };
 
-const createTOCLink = (heading, section, subsection, subSubSection) => {
-    const link = document.createElement("a");
-    link.href = `#${heading.id}`;
+const createSectionNumber = (section, subsection, subSubSection) => {
+    const number = document.createElement("span");
+    number.classList.add("section-number");
     if (subSubSection) {
-        link.textContent = `${section}.${subsection}.${subSubSection}. ${heading.textContent}`;
+        number.textContent = `${section}.${subsection}.${subSubSection}.`;
     } else if (subsection) {
-        link.textContent = `${section}.${subsection}. ${heading.textContent}`;
+        number.textContent = `${section}.${subsection}.`;
     } else {
-        link.textContent = `${section}. ${heading.textContent}`;
+        number.textContent = `${section}.`;
     }
-    return link;
+    return number;
 };
 
-const appendTOCItem = (list, link) => {
+const toggleSubListVisibility = (subList) => {
+    if (subList) {
+        const isExpanded = subList.style.display !== "none";
+        subList.style.display = isExpanded ? "none" : "block";
+    }
+};
+
+const createTOCEntry = (heading, section, subsection, subSubSection) => {
     const item = document.createElement("li");
-    item.appendChild(link);
-    list.appendChild(item);
+    const wrapper = document.createElement("div");
+    const sectionNumber = createSectionNumber(section, subsection, subSubSection);
+    let hasSubList = false;
+    if (heading.tagName === "H1" || heading.tagName === "H2") {
+        const allHeadings = Array.from(heading.parentNode.querySelectorAll("h1, h2, h3"));
+        const headingIndex = Array.from(heading.parentNode.children).indexOf(heading);
+        hasSubList = hasSubsections(allHeadings, headingIndex, heading.tagName);
+    }
+    if (hasSubList) {
+        sectionNumber.addEventListener("click", () => {
+            const subList = item.querySelector("ol");
+            toggleSubListVisibility(subList);
+        });
+    } else {
+        sectionNumber.style.cursor = "default";
+        sectionNumber.style.color = "inherit";
+    }
+    const link = document.createElement("a");
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    wrapper.appendChild(sectionNumber);
+    wrapper.appendChild(link);
+    item.appendChild(wrapper);
     return item;
 };
 
@@ -44,81 +72,86 @@ const addSubListToSection = (section) => {
     return subList;
 };
 
+const hasSubsections = (headings, index, tagName) => {
+    for (let i = index + 1; i < headings.length; i++) {
+        if (headings[i].tagName > tagName) {
+            return true;
+        }
+        if (headings[i].tagName <= tagName) {
+            break;
+        }
+    }
+    return false;
+};
+
 const generateTOC = (headings, tocList) => {
-    let sectionCount = 0;
-    let subSectionCount = 0;
-    let subSubSectionCount = 0;
-    let currentSection = null;
-    let currentSubSection = null;
-    for (const heading of headings) {
+    let sectionCount = 0,
+        subSectionCount = 0,
+        subSubSectionCount = 0;
+    let currentSection = null,
+        currentSubSection = null;
+    headings.forEach((heading, index) => {
         ensureHeadingId(heading);
         if (heading.tagName === "H1") {
-            sectionCount += 1;
-            subSectionCount = 0;
-            subSubSectionCount = 0;
-            const link = createTOCLink(heading, sectionCount);
-            currentSection = appendTOCItem(tocList, link);
-            currentSubSection = null; 
+            sectionCount++;
+            subSectionCount = subSubSectionCount = 0;
+            currentSection = createTOCEntry(heading, sectionCount);
+            tocList.appendChild(currentSection);
+            if (hasSubsections(headings, index, "H1")) {
+                addSubListToSection(currentSection);
+            }
         } else if (heading.tagName === "H2" && currentSection) {
-            subSectionCount += 1;
+            subSectionCount++;
             subSubSectionCount = 0;
-            const link = createTOCLink(heading, sectionCount, subSectionCount);
             const subList = addSubListToSection(currentSection);
-            currentSubSection = appendTOCItem(subList, link);
+            currentSubSection = createTOCEntry(heading, sectionCount, subSectionCount);
+            subList.appendChild(currentSubSection);
+            if (hasSubsections(headings, index, "H2")) {
+                addSubListToSection(currentSubSection);
+            }
         } else if (heading.tagName === "H3" && currentSubSection) {
-            subSubSectionCount += 1;
-            const link = createTOCLink(
+            subSubSectionCount++;
+            const subSubList = addSubListToSection(currentSubSection);
+            const subSubItem = createTOCEntry(
                 heading,
                 sectionCount,
                 subSectionCount,
                 subSubSectionCount
             );
-            const subSubList = addSubListToSection(currentSubSection);
-            appendTOCItem(subSubList, link);
+            subSubList.appendChild(subSubItem);
         }
-    }
+    });
 };
 
-const createContentSections = (contentNodes, endIndex) => {
+const splitContentByTOC = (contentNodes, endIndex) => {
     const alongsideToc = document.createElement("div");
     alongsideToc.classList.add("alongside-toc");
     const afterToc = document.createElement("div");
     afterToc.classList.add("after-toc");
-    for (let index = 0; index < contentNodes.length; index++) {
-        const node = contentNodes[index];
-        if (index <= endIndex) {
-            alongsideToc.appendChild(node.cloneNode(true));
-        } else {
-            afterToc.appendChild(node.cloneNode(true));
-        }
-    }
+    contentNodes.forEach((node, index) => {
+        const clone = node.cloneNode(true);
+        index <= endIndex ? alongsideToc.appendChild(clone) : afterToc.appendChild(clone);
+    });
     return { alongsideToc, afterToc };
 };
 
-const findTOCEndIndex = (contentNodes) => {
-    for (let index = 0; index < contentNodes.length; index++) {
-        const node = contentNodes[index];
-        if (node.nodeType === 1 && (node.tagName === "H2" || index >= 3)) {
-            return index;
-        }
-    }
-    return -1;
-};
+const findTOCEndIndex = (contentNodes) =>
+    contentNodes.findIndex(
+        (node, index) => node.nodeType === 1 && (node.tagName === "H2" || index >= 3)
+    ) || -1;
 
 const initializeTOC = (main) => {
-    const { container: tocContainer, list: tocList } = createTOCContainer();
+    const { container, list } = createTOCContainer();
     const contentNodes = Array.from(main.childNodes);
     const headings = Array.from(main.querySelectorAll("h1, h2, h3"));
-    if (headings.length === 0) {
+    if (!headings.length) {
         return;
     }
     const tocEndIndex = findTOCEndIndex(contentNodes);
-    generateTOC(headings, tocList);
-    const { alongsideToc, afterToc } = createContentSections(contentNodes, tocEndIndex);
-    while (main.firstChild) {
-        main.removeChild(main.firstChild);
-    }
-    main.appendChild(tocContainer);
+    generateTOC(headings, list);
+    const { alongsideToc, afterToc } = splitContentByTOC(contentNodes, tocEndIndex);
+    main.innerHTML = "";
+    main.appendChild(container);
     main.appendChild(alongsideToc);
     main.appendChild(afterToc);
 };

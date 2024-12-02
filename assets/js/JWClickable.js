@@ -149,8 +149,15 @@ class ClickableTooltip {
                 selector: '.copy-button',
                 description: () => '<i class="fas fa-copy"></i> Click to copy the code block',
             },
+            {
+                selector: '.download-button',
+                description: () => {
+                    const relativePath = window.location.pathname;
+                    return `<i class="fas fa-file-download"></i> Download PDF of <strong>${relativePath}</strong>`;
+                },
+            },
         ];
-    }    
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

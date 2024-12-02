@@ -125,7 +125,6 @@ class ClickableTooltip {
                     const url = new URL(element.href);
                     const textContent = element.textContent.trim();
                     const hasAlphabets = /[a-zA-Z]/.test(textContent);
-    
                     if (url.host === window.location.host) {
                         if (element.hash) {
                             return hasAlphabets

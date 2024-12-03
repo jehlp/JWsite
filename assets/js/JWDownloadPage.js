@@ -22,7 +22,7 @@ const preparePDFContent = () => {
     const container = document.createElement('div');
     container.classList.add('pdf-container', 'pdf-content');
     const content = document.querySelector('main').cloneNode(true);
-    ['.theme-toggle', '.download-button', 'nav', 'footer', '.copy-button'].forEach((selector) =>
+    ['.theme-toggle', '.download-button', 'nav', 'footer', '.copy-button', '.image-caption'].forEach((selector) =>
         content.querySelectorAll(selector).forEach((element) => element.remove())
     );
     content.querySelectorAll('pre').forEach(formatCodeBlock);

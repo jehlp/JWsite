@@ -18,6 +18,7 @@
     --syntax-function: #e6e68c;    
     --syntax-operator: #ffffff;
     --syntax-punctuation: #999999;
+    --toc-bg-color: #282828;
 }
 
 :root[data-theme="light"] {
@@ -37,4 +38,5 @@
     --syntax-function: #8a8a18;     
     --syntax-operator: #000000;
     --syntax-punctuation: #666666;
+    --toc-bg-color: #eaeaea;
 }

@@ -33,6 +33,7 @@ const preparePDFContent = () => {
 
 const captureContent = async (content) => {
     await new Promise((resolve) => setTimeout(resolve, 100));
+    const contentHeight = content.scrollHeight;
     return html2canvas(content, {
         scale: 2,
         useCORS: true,
@@ -40,6 +41,7 @@ const captureContent = async (content) => {
         scrollX: -50,
         scrollY: 0,
         width: 1000,
+        height: contentHeight,
         windowWidth: 1000,
         backgroundColor: '#ffffff',
         onclone: (doc) => {

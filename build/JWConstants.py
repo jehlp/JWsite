@@ -14,7 +14,8 @@ class ansi:
     invert = '\033[7m'
 
 class regex:
-    hyperlink = r'\[(.*?)\]\((.*?)\)'
+    hyperlink = r'(?<!!)\[(.*?)\]\((.*?)\)'
+    image_link = r'#link=(https://tinyurl\.com/[a-zA-Z0-9]+)'
     code_block = r'```[\s\S]*?```'
     inline_code = r'`[^`]*`'
     url = r'^https?://\S+$'

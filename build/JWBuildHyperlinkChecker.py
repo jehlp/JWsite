@@ -11,9 +11,14 @@ def parse_hyperlink(hyperlink):
     return match.groups() if match else None
 
 def extract_hyperlinks(content):
-    return re.findall(regex.hyperlink, content)
+    regular_links = re.findall(regex.hyperlink, content)
+    image_links = re.findall(regex.image_link, content)
+    image_link_tuples = [(None, url) for url in image_links]
+    return regular_links + image_link_tuples
 
 def validate_url(url):
+    if url.startswith('/assets/'):
+        return True
     return bool(re.match(regex.url, url))
 
 def validate_hyperlink(file, hyperlink):

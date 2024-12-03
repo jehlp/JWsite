@@ -15,7 +15,7 @@ class ansi:
 
 class regex:
     hyperlink = r'(?<!!)\[(.*?)\]\((.*?)\)'
-    image_link = r'#link=(https://tinyurl\.com/[a-zA-Z0-9]+)'
+    image_link = r'#link=([^\s\]]+)'
     code_block = r'```[\s\S]*?```'
     inline_code = r'`[^`]*`'
     url = r'^https?://\S+$'

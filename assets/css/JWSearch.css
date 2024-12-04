@@ -1,0 +1,135 @@
+.search-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+#content-search {
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+    font-size: 1.1em;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    font-family: var(--serif-font) !important;
+    font-variant: small-caps;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#content-search::placeholder {
+    font-family: var(--serif-font) !important;
+    font-variant: small-caps;
+    color: var(--accent-color);
+}
+
+#content-search:focus {
+    border-color: var(--accent-color); 
+    box-shadow: 0 0 5px var(--accent-color); 
+}
+
+.search-suggestions {
+    position: absolute;
+    width: 80%;
+    max-width: 600px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    margin-top: -1px;
+    display: none;
+    z-index: 1000;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.entry-item.hidden,
+.month-group.hidden,
+.year-group.hidden {
+    display: none;
+}
+
+.search-suggestions {
+    position: absolute;
+    width: 80%;
+    max-width: 600px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    margin-top: -1px;
+    display: none;
+    z-index: 1000;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: calc(5 * 2rem);
+    overflow-y: auto;
+}
+
+.search-suggestions.active {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: var(--text-color);
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 8px;
+    height: 2rem;
+}
+
+.suggestion-item:hover {
+    background-color: var(--border-color);
+}
+
+.suggestion-text {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 8px;
+    font-variant: small-caps;
+}
+
+.tag-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-variant: small-caps;
+}
+
+.suggestion-type {
+    color: var(--accent-color);
+    font-size: 0.9em;
+    font-family: var(--serif-font) !important;
+    font-variant: small-caps;
+    min-width: 4em;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tags-banner {
+    color: var(--accent-color);
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.tags-banner span.tags-label {
+    font-style: normal;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+.tags-banner .tag {
+    display: inline;
+    font-weight: 600;
+    font-variant: small-caps;
+}

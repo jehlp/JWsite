@@ -49,12 +49,6 @@
     transform: translateX(-50%);
 }
 
-.entry-item.hidden,
-.month-group.hidden,
-.year-group.hidden {
-    display: none;
-}
-
 .search-suggestions {
     position: absolute;
     width: 80%;
@@ -69,7 +63,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    max-height: calc(5 * 2rem);
+    max-height: calc(10 * 2rem);
     overflow-y: auto;
 }
 

@@ -9,24 +9,6 @@ const getAllTags = () => {
     return Array.from(tagSet);
 };
 
-const handleSearch = (searchTerm) => {
-    const entries = document.querySelectorAll('.entry-item');
-    entries.forEach(entry => {
-        const title = entry.getAttribute('data-title') || '';
-        const tags = entry.getAttribute('data-tags') || '';
-        const matches = title.toLowerCase().includes(searchTerm) || tags.toLowerCase().includes(searchTerm);
-        entry.style.display = matches ? '' : 'none';
-    });
-    document.querySelectorAll('.month-section').forEach(monthSection => {
-        const hasVisibleEntries = Array.from(monthSection.querySelectorAll('.entry-item')).some(entry => entry.style.display !== 'none');
-        monthSection.style.display = hasVisibleEntries ? '' : 'none';
-    });
-    document.querySelectorAll('.year-section').forEach(yearSection => {
-        const hasVisibleMonths = Array.from(yearSection.querySelectorAll('.month-section')).some(month => month.style.display !== 'none');
-        yearSection.style.display = hasVisibleMonths ? '' : 'none';
-    });
-};
-
 const getEntryData = () => {
     const allEntries = document.querySelectorAll('.entry-item');
     return Array.from(allEntries).map(entry => {
@@ -110,7 +92,6 @@ class JWSearch {
         if (searchInput) {
             searchInput.addEventListener('input', event => {
                 const searchTerm = event.target.value.toLowerCase();
-                handleSearch(searchTerm);
                 showSuggestions(searchTerm);
             });
             document.addEventListener('click', event => {

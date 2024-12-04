@@ -114,6 +114,9 @@
     color: var(--accent-color);
     font-size: 1.3em;
     text-align: center;
+    width: 66%;
+    margin: 0 auto 1rem auto;
+    word-wrap: break-word;
 }
 
 .tags-banner span.tags-label {
@@ -126,4 +129,5 @@
     display: inline;
     font-weight: 600;
     font-variant: small-caps;
+    white-space: nowrap;
 }

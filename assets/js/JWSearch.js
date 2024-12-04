@@ -13,7 +13,7 @@ const getEntryData = () => {
     const allEntries = document.querySelectorAll('.entry-item');
     return Array.from(allEntries).map(entry => {
         const link = entry.querySelector('a');
-        const entryTags = (entry.getAttribute('data-tags') || '').split(',').map(t => t.trim());
+        const entryTags = (entry.getAttribute('data-tags') || '').split(',').map(tag => tag.trim());
         return {
             title: link ? link.textContent : '',
             url: link ? link.getAttribute('href') : '',
@@ -54,13 +54,11 @@ const showSuggestions = (searchTerm) => {
     const tags = getAllTags();
     const matchingTags = tags.filter(tag => tag.toLowerCase().includes(searchTerm));
     const entries = getEntryData();
-    const titleMatches = entries.filter(entry =>
-        entry.title.toLowerCase().includes(searchTerm)
-    );
+    const titleMatches = entries.filter(entry => entry.title.toLowerCase().includes(searchTerm));
     const tagRelatedEntries = matchingTags.flatMap(matchingTag =>
         entries.filter(entry =>
             entry.tags.includes(matchingTag.toLowerCase()) &&
-            !titleMatches.some(tm => tm.title === entry.title)
+            !titleMatches.some(titleMatch => titleMatch.title === entry.title)
         ).map(entry => ({ ...entry, matchingTag }))
     );
     let html = '';

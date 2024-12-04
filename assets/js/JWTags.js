@@ -20,9 +20,20 @@ class JWTags {
     static init() {
         const tags = window.page_tags || [];
         const bannerHtml = renderTagsBanner(tags);
-        const navbar = document.querySelector('nav') || document.querySelector('header');
-        if (navbar && bannerHtml) {
-            navbar.insertAdjacentHTML('afterend', bannerHtml);
+        const footer = document.querySelector('footer');
+        if (footer && bannerHtml) {
+            const tagsContainer = document.createElement('div');
+            tagsContainer.innerHTML = bannerHtml;
+            let footerContent = footer.querySelector('.footer-content');
+            if (!footerContent) {
+                footerContent = document.createElement('div');
+                footerContent.className = 'footer-content';
+                while (footer.firstChild) {
+                    footerContent.appendChild(footer.firstChild);
+                }
+                footer.appendChild(footerContent);
+            }
+            footer.insertBefore(tagsContainer, footerContent);
         }
     }
 }

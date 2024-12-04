@@ -1,4 +1,27 @@
-const buildRef = (index) => {
+const getWebsiteIcon = (href) => {
+    try {
+        const url = new URL(href);
+        const domain = url.hostname.toLowerCase();
+        const iconMap = {
+            'wikipedia.org': 'fab fa-wikipedia-w',
+            'x.com': 'fab fa-x-twitter',
+            'github.com': 'fab fa-github',
+            'youtube.com': 'fab fa-youtube',
+        };
+        for (const [site, icon] of Object.entries(iconMap)) {
+            if (domain.includes(site)) {
+                return icon;
+            }
+        }
+        return null;
+    } catch {
+        return null;
+    }
+};
+  
+const buildRef = (index, href) => {
+    const container = document.createElement('span');
+    container.className = 'footnote-container';
     const superscript = document.createElement('sup');
     const ref = document.createElement('a');
     ref.href = `#fn-${index + 1}`;
@@ -6,7 +29,16 @@ const buildRef = (index) => {
     ref.className = 'footnote-ref';
     ref.textContent = `[${index + 1}]`;
     superscript.appendChild(ref);
-    return superscript;
+    container.appendChild(superscript);
+    const icon = getWebsiteIcon(href);
+    if (icon) {
+        const sub = document.createElement('sub');
+        const iconElement = document.createElement('i');
+        iconElement.className = `${icon} footnote-icon`;
+        sub.appendChild(iconElement);
+        container.appendChild(sub);
+    }
+    return container;
 };
 
 const buildFootnote = (link, index) => {
@@ -43,7 +75,7 @@ const buildSection = (links) => {
     section.className = 'footnotes';
     section.innerHTML = '<h2>References</h2>';
     links.forEach((link, index) => {
-        const ref = buildRef(index);
+        const ref = buildRef(index, link.href);
         link.parentNode.insertBefore(ref, link.nextSibling);
         const footnote = buildFootnote(link, index);
         list.appendChild(footnote);

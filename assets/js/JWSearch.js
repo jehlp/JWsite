@@ -9,25 +9,6 @@ const getAllTags = () => {
     return Array.from(tagSet);
 };
 
-const findSimilarStrings = (input, strings, maxSuggestions = 5) => {
-    if (!input) return [];
-    input = input.toLowerCase();
-    return strings
-        .filter(str => str && str.toLowerCase().includes(input))
-        .sort((a, b) => {
-            const aStarts = a.toLowerCase().startsWith(input);
-            const bStarts = b.toLowerCase().startsWith(input);
-            if (aStarts && !bStarts) {
-                return -1;
-            }
-            if (!aStarts && bStarts) {
-                return 1;
-            }
-            return a.localeCompare(b);
-        })
-        .slice(0, maxSuggestions);
-};
-
 const handleSearch = (searchTerm) => {
     const entries = document.querySelectorAll('.entry-item');
     entries.forEach(entry => {
@@ -118,7 +99,6 @@ const showSuggestions = (searchTerm) => {
         suggestionsDiv.classList.remove('active');
     }
 };
-
 
 const hideSuggestions = () => {
     const suggestionsDiv = document.getElementById('search-suggestions');

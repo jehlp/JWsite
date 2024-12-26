@@ -1,3 +1,13 @@
+/**
+ * File: JWCopyCode.js
+ * The JavaScript file adds a copy button to code blocks on a webpage.
+ * The copy button is created using the 'createCopyButton' function, which generates a button element with a copy icon.
+ * The 'wrapCodeBlock' function wraps the code block in a div element to position the copy button relative to the code block.
+ * The 'addCopyButtonsToCodeBlocks' function iterates over all code blocks, adds the copy button, and sets up a click event listener.
+ * On clicking the copy button, the code block's content is copied to the clipboard, and the button's icon changes to a check mark for 2 seconds.
+ * The copy button is added to all code blocks once the webpage has fully loaded.
+ */
+
 const createCopyButton = () => {
     const button = document.createElement('button');
     button.classList.add('copy-button');

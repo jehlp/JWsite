@@ -1,3 +1,13 @@
+/**
+ * File: JWDownloadPage.js
+ * The script provides functionality to convert a webpage's content into a PDF file.
+ * It removes unnecessary elements like navigation, footer, and download button from the content before converting it into PDF.
+ * It formats code blocks and inline code to be properly displayed in the PDF.
+ * The script uses html2canvas to capture the content of the webpage as an image, then adds this image to a PDF file using jsPDF.
+ * The script also adjusts the title of the document based on the main heading of the webpage.
+ * The script adds an event listener to the download button, which triggers the PDF conversion and download when clicked.
+ */
+
 const { jsPDF } = window.jspdf;
 
 const formatCodeBlock = (pre) => {

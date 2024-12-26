@@ -1,3 +1,13 @@
+/**
+ * File: JWSearch.js
+ * The JavaScript file is used to implement a search functionality in a webpage.
+ * It fetches all tags and entry data from the webpage's elements.
+ * It generates HTML for search suggestions based on the user's search term.
+ * It handles click events on the suggestion items, redirecting the user to the clicked item's URL.
+ * It shows or hides the search suggestions based on the user's interaction with the search input.
+ * The search functionality is initialized when the webpage's content is fully loaded.
+ */
+
 const getAllTags = () => {
     const tagSet = new Set();
     document.querySelectorAll('.entry-item').forEach(entry => {

@@ -1,3 +1,13 @@
+/**
+ * File: JWFootnotes.js
+ * The JavaScript file is used to create footnotes for a webpage.
+ * It identifies external links on the page and generates a reference for each one.
+ * It assigns an icon to each link based on the domain it points to, using a predefined map.
+ * It creates a 'References' section at the end of the page, listing all the external links with their references.
+ * It also adds a smooth scrolling effect when a reference is clicked, highlighting the corresponding link for a short period.
+ * It fetches a blacklist configuration to filter out certain domains from being included in the footnotes.
+ */
+
 const getWebsiteIcon = (href) => {
     try {
         const url = new URL(href);
@@ -18,7 +28,7 @@ const getWebsiteIcon = (href) => {
         return null;
     }
 };
-  
+
 const buildRef = (index, href) => {
     const container = document.createElement('span');
     container.className = 'footnote-container';

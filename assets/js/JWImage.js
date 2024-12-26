@@ -1,3 +1,13 @@
+/**
+ * File: JWImage.js
+ * The JavaScript file wraps images in a div container with specific classes for styling purposes.
+ * It parses the alt text of the image to extract text, link, and alignment information.
+ * If the alt text contains a link, it is extracted and the remaining text is used as the caption.
+ * If the alt text specifies an alignment (left or right), it is applied to the image container.
+ * A caption is added to the image container, which can be a plain text or a hyperlink based on the parsed alt text.
+ * On document load, the script applies these transformations to all images in the document.
+ */
+
 const wrapImageInBox = (image) => {
     const imageBox = document.createElement("div");
     imageBox.classList.add("image-box");

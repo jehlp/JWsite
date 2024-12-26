@@ -1,3 +1,13 @@
+/**
+ * File: JWTableOfContents.js
+ * This JavaScript file is used to generate a table of contents (TOC) for a webpage.
+ * It dynamically creates a TOC based on the H1, H2, and H3 headings found in the webpage.
+ * The TOC is interactive, allowing users to expand and collapse subsections.
+ * It ensures each heading has an ID for linking purposes in the TOC.
+ * The file also splits the content into two sections: alongside the TOC and after the TOC.
+ * The script is initialized once the DOM content has loaded.
+ */
+
 const createTOCContainer = () => {
     const container = document.createElement("div");
     container.classList.add("toc-container");

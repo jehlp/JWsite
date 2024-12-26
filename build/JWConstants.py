@@ -21,3 +21,4 @@ class regex:
     url = r'^https?://\S+$'
     word = r"\b[a-zA-Z']+\b"
     filename_date = r'(\d{4}-\d{2}-\d{2})'
+    file_comment = r'\s*/\*\*.*?\* File:.*?\*/\s*'

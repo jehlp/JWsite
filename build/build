@@ -11,7 +11,8 @@ venv_dir = root / "build" / "venv"
 requirements = ["pyyaml", 
                 "pyspellchecker", 
                 "requests", 
-                "pillow"]
+                "pillow",
+                "openai"]
 build_dir = root / "build"
 if not venv_dir.exists():
     venv.create(venv_dir, with_pip=True)

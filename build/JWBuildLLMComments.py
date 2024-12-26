@@ -6,11 +6,6 @@ from JWConstants import ansi, regex
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def has_comment_above(content, target):
-    if target == "file":
-        return bool(re.match(regex.file_comment, content, re.DOTALL))
-    return False
-
 def generate_comment(prompt):
     system_prompt = """You will describe what the JavaScript file does in 2-6 distinct lines.
     IMPORTANT: Use a triple pipe ||| between each line.
@@ -35,11 +30,11 @@ def generate_comment(prompt):
         print(f"{ansi.red}Error generating comment: {exception}{ansi.end}")
         return ""
 
-def process_js_file(file_path):
+def add_comment_to_file(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             content = file.read()      
-        if has_comment_above(content, "file"):
+        if bool(re.match(regex.file_comment, content, re.DOTALL)):
             print(f"{ansi.yellow}Skipping {file_path} - already has comment{ansi.end}")
             return      
         file_name = Path(file_path).name
@@ -60,11 +55,11 @@ def process_js_file(file_path):
     except Exception as exception:
         print(f"{ansi.red}Error processing {file_path}: {exception}{ansi.end}")
 
-def process_js_files():
+def summarize_files():
     root = Path(__file__).parent.parent
     js_dir = root / "assets" / "js"
     for js_file in Path(js_dir).rglob("*.js"):
-        process_js_file(js_file)
+        add_comment_to_file(js_file)
 
 if __name__ == "__main__":
-    process_js_files()
+    summarize_files()

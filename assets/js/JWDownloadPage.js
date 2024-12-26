@@ -125,17 +125,15 @@ const downloadAsPDF = async () => {
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    const downloadButton = document.querySelector('.download-button');
-    if (downloadButton) {
+document.addEventListener('click', async (event) => {
+    const targetButton = event.target.closest('.download-button');
+    if (targetButton) {
+        event.preventDefault();
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
         if (!isMobile) {
-            downloadButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                downloadAsPDF();
-            });
+            await downloadAsPDF();
         } else {
-            downloadButton.style.display = 'none';
+            targetButton.style.display = 'none';
         }
     }
-});
+}, true);

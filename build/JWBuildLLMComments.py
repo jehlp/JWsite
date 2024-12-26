@@ -32,8 +32,8 @@ def generate_comment(prompt):
 
 def add_comment_to_file(file_path):
     try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            content = file.read()      
+        with open(file_path, "r", encoding="utf-8") as file_handle:
+            content = file_handle.read()      
         if bool(re.match(regex.file_comment, content, re.DOTALL)):
             print(f"{ansi.yellow}Skipping {file_path} - already has comment{ansi.end}")
             return      
@@ -49,8 +49,8 @@ def add_comment_to_file(file_path):
             " */\n\n"
         )
         content = file_comment + content
-        with open(file_path, "w", encoding="utf-8") as file:
-            file.write(content)
+        with open(file_path, "w", encoding="utf-8") as file_handle:
+            file_handle.write(content)
         print(f"{ansi.green}Processed: {file_name}{ansi.end}")
     except Exception as exception:
         print(f"{ansi.red}Error processing {file_path}: {exception}{ansi.end}")

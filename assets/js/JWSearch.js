@@ -94,21 +94,19 @@ const hideSuggestions = () => {
     }
 };
 
-class JWSearch {
-    static init() {
-        const searchInput = document.getElementById('content-search');
-        if (searchInput) {
-            searchInput.addEventListener('input', event => {
-                const searchTerm = event.target.value.toLowerCase();
-                showSuggestions(searchTerm);
-            });
-            document.addEventListener('click', event => {
-                if (!event.target.closest('.search-container')) {
-                    hideSuggestions();
-                }
-            });
-        }
+const initializeSearch = () => {
+    const searchInput = document.getElementById('content-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', event => {
+            const searchTerm = event.target.value.toLowerCase();
+            showSuggestions(searchTerm);
+        });
+        document.addEventListener('click', event => {
+            if (!event.target.closest('.search-container')) {
+                hideSuggestions();
+            }
+        });
     }
-}
+};
 
-document.addEventListener('DOMContentLoaded', JWSearch.init);
+document.addEventListener('DOMContentLoaded', initializeSearch);

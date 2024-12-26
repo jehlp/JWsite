@@ -31,8 +31,8 @@ def generate_comment(prompt):
         )
         lines = [line.strip() for line in response.choices[0].message.content.split('|||') if line.strip()]
         return '\n'.join(lines)
-    except Exception as e:
-        print(f"{ansi.red}Error generating comment: {e}{ansi.end}")
+    except Exception as exception:
+        print(f"{ansi.red}Error generating comment: {exception}{ansi.end}")
         return ""
 
 def process_js_file(file_path):
@@ -57,8 +57,8 @@ def process_js_file(file_path):
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(content)
         print(f"{ansi.green}Processed: {file_name}{ansi.end}")
-    except Exception as e:
-        print(f"{ansi.red}Error processing {file_path}: {e}{ansi.end}")
+    except Exception as exception:
+        print(f"{ansi.red}Error processing {file_path}: {exception}{ansi.end}")
 
 def process_js_files():
     root = Path(__file__).parent.parent

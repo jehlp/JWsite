@@ -45,7 +45,7 @@ def add_comment_to_file(file_path):
         file_comment = (
             "/**\n"
             f" * File: {file_name}\n"
-            f"{chr(10).join(formatted_lines)}\n"
+            f"{'\n'.join(formatted_lines)}\n"
             " */\n\n"
         )
         content = file_comment + content

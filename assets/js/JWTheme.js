@@ -23,6 +23,10 @@ const toggleTheme = () => {
 }
  
 updateTheme(localStorage.getItem('theme') || 'dark');
-document.addEventListener('DOMContentLoaded', () => 
-    document.querySelector('.theme-toggle')?.addEventListener('click', toggleTheme)
-);
+document.addEventListener('click', (event) => {
+    const themeToggle = event.target.closest('.theme-toggle');
+    if (themeToggle) {
+        event.preventDefault();
+        toggleTheme();
+    }
+}, true);

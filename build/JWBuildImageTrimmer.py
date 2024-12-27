@@ -3,19 +3,19 @@ from PIL import Image
 
 def is_uniform_row(image, row_index, tolerance=0):
     image_width = image.width
-    row_pixel_colors = [image.getpixel((x, row_index)) for x in range(image_width)]
+    row_pixel_colors = [image.getpixel((x_pos, row_index)) for x_pos in range(image_width)]
     return all(
-        all(abs(row_pixel_colors[0][i] - pixel[i]) <= tolerance
-            for i in range(len(pixel)))
+        all(abs(row_pixel_colors[0][color_channel] - pixel[color_channel]) <= tolerance
+            for color_channel in range(len(pixel)))
         for pixel in row_pixel_colors[1:]
     )
 
 def is_uniform_column(image, column_index, tolerance=0):
     image_height = image.height
-    column_pixel_colors = [image.getpixel((column_index, y)) for y in range(image_height)]
+    column_pixel_colors = [image.getpixel((column_index, y_pos)) for y_pos in range(image_height)]
     return all(
-        all(abs(column_pixel_colors[0][i] - pixel[i]) <= tolerance
-            for i in range(len(pixel)))
+        all(abs(column_pixel_colors[0][color_channel] - pixel[color_channel]) <= tolerance
+            for color_channel in range(len(pixel)))
         for pixel in column_pixel_colors[1:]
     )
 

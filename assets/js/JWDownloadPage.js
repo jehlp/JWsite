@@ -136,7 +136,6 @@ document.addEventListener('click', async (event) => {
 document.addEventListener('DOMContentLoaded', () => {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const downloadButton = document.querySelector('.download-button');
-    
     if (isMobile && downloadButton) {
         downloadButton.style.display = 'none';
     }

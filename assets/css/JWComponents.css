@@ -108,3 +108,53 @@ footer {
     line-height: 1;
     margin-right: 0.1em;
 }
+
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 2rem;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .nav a {
+        font-size: 0.9rem;
+    }
+    
+    .post-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .post-category {
+        display: none;
+    }
+    
+    .post {
+        margin-bottom: 2.5rem;
+    }
+    
+    .archive-date {
+        min-width: 100px;
+    }
+    
+    footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+    }
+    
+    .footer-content {
+        justify-content: center;
+    }
+    
+    .dropcap {
+        font-size: 2.8em;
+    }
+}

@@ -76,3 +76,54 @@
     top: 100%;
     margin-top: -14px;
 }
+
+@media (max-width: 768px) {
+    .footnotes {
+        margin-top: 2.5rem;
+        padding-top: 0.3rem;
+        border-top-width: 1px;
+    }
+    
+    .footnotes h2 {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+        letter-spacing: 0.08em;
+    }
+    
+    .footnotes ol {
+        padding-left: 1.2rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+    
+    .footnotes li {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .footnote-text {
+        margin-right: 0.3rem;
+    }
+    
+    .footnote-url {
+        margin: 0 0.3rem;
+        font-size: 0.82rem;
+    }
+    
+    .footnote-backref {
+        margin-left: 0.3rem;
+    }
+    
+    .footnote-container {
+        margin-left: 1px;
+    }
+    
+    .footnote-ref {
+        font-size: 0.7em;
+    }
+    
+    .footnote-icon {
+        font-size: 0.7em;
+        margin-top: -12px;
+    }
+}

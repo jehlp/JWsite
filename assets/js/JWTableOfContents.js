@@ -169,6 +169,9 @@ const initializeTOC = (main) => {
 document.addEventListener("DOMContentLoaded", () => {
     const main = document.querySelector("main");
     if (main) {
-        initializeTOC(main);
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        if (!isMobile) {
+            initializeTOC(main);
+        }
     }
 });

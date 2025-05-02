@@ -5,9 +5,19 @@ pre, code {
     border-radius: 3px;
 }
 
-code { padding: 0.2rem 0.4rem; }
-pre { margin: 0.5rem 0; padding: 0.75rem; overflow-x: auto; }
-pre code { padding: 0; }
+code { 
+    padding: 0.2rem 0.4rem; 
+}
+
+pre { 
+    margin: 0.5rem 0; 
+    padding: 0.75rem; 
+    overflow-x: auto; 
+}
+
+pre code { 
+    padding: 0; 
+}
 
 .highlight {
     background: var(--code-bg);
@@ -20,11 +30,55 @@ pre code { padding: 0; }
     padding: 0.75rem;
 }
 
-.highlight code { color: var(--syntax-plain); }
-.highlight .c, .highlight .c1, .highlight .cm { color: var(--syntax-comment); }
-.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: var(--syntax-keyword); font-weight: bold; }
-.highlight .s, .highlight .s1, .highlight .s2 { color: var(--syntax-string); }
-.highlight .mi, .highlight .nb, .highlight .m { color: var(--syntax-number); }
-.highlight .nx, .highlight .nf, .highlight .na { color: var(--syntax-function); }
-.highlight .o, .highlight .p { color: var(--syntax-operator); }
-.highlight .p, .highlight .pi { color: var(--syntax-punctuation); }
+.highlight code { 
+    color: var(--syntax-plain); 
+}
+
+.highlight .c, .highlight .c1, .highlight .cm { 
+    color: var(--syntax-comment); 
+}
+
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { 
+    color: var(--syntax-keyword); 
+    font-weight: bold; 
+}
+
+.highlight .s, .highlight .s1, .highlight .s2 { 
+    color: var(--syntax-string); 
+}
+
+.highlight .mi, .highlight .nb, .highlight .m { 
+    color: var(--syntax-number); 
+}
+
+.highlight .nx, .highlight .nf, .highlight .na { 
+    color: var(--syntax-function); 
+}
+
+.highlight .o, .highlight .p { 
+    color: var(--syntax-operator); 
+}
+
+.highlight .p, .highlight .pi { 
+    color: var(--syntax-punctuation); 
+}
+
+@media (max-width: 768px) {
+    pre {
+        padding: 0.5rem;
+        font-size: 0.9em;
+    }
+    
+    code {
+        padding: 0.1rem 0.3rem;
+        font-size: 0.9em;
+    }
+    
+    .highlight {
+        margin: 0.4rem 0;
+    }
+    
+    .highlight pre {
+        padding: 0.5rem;
+    }
+}

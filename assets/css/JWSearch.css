@@ -96,7 +96,7 @@
 }
 
 .tag-text {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--serif-font);
     font-variant: small-caps;
 }
 
@@ -130,4 +130,46 @@
     font-weight: 600;
     font-variant: small-caps;
     white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        margin: 1rem 0;
+    }
+    
+    #content-search {
+        width: 95%;
+        padding: 6px;
+        font-size: 0.9em;
+    }
+    
+    .search-suggestions {
+        width: 95%;
+        max-height: calc(6 * 1.6rem);
+    }
+    
+    .suggestion-item {
+        padding: 4px 6px;
+        gap: 4px;
+        height: 1.6rem;
+    }
+    
+    .suggestion-text {
+        font-size: 0.85em;
+    }
+    
+    .suggestion-type {
+        font-size: 0.75em;
+        min-width: 3em;
+    }
+    
+    .tags-banner {
+        font-size: 1em;
+        width: 95%;
+        margin: 0 auto 0.6rem auto;
+    }
+    
+    .tags-banner .tag {
+        font-size: 0.9em;
+    }
 }

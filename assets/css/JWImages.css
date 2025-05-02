@@ -81,3 +81,29 @@
     background-color: #ffffff;
     border-color: #a0a0a0;
 }
+
+@media (max-width: 768px) {
+    .image-box {
+        margin: 0.5rem 0;
+        width: 100%;
+    }
+    
+    .image-box-left,
+    .image-box-right {
+        float: none;
+        margin: 0.5rem 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .image-wrapper {
+        padding: 8px;
+        border-width: 2px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-caption {
+        margin-top: 6px;
+        font-size: 1rem;
+    }
+}

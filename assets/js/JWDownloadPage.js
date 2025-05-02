@@ -129,11 +129,15 @@ document.addEventListener('click', async (event) => {
     const targetButton = event.target.closest('.download-button');
     if (targetButton) {
         event.preventDefault();
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
-        if (!isMobile) {
-            await downloadAsPDF();
-        } else {
-            targetButton.style.display = 'none';
-        }
+        await downloadAsPDF();
     }
 }, true);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const downloadButton = document.querySelector('.download-button');
+    
+    if (isMobile && downloadButton) {
+        downloadButton.style.display = 'none';
+    }
+});

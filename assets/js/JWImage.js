@@ -60,7 +60,9 @@ const addCaptionToImageBox = (imageBox, text, link) => {
 };
 
 const wrapAllImagesInBoxes = () => {
-    const images = document.querySelectorAll("img");
+    const main = document.querySelector("main");
+    if (!main) return;
+    const images = main.querySelectorAll("img:not(.image-wrapper img)");
     images.forEach(wrapImageInBox);
 };
 

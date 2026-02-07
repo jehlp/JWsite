@@ -83,3 +83,31 @@ main {
     clear: both;
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .toc-container {
+        float: none;
+        width: 100%;
+        margin: 0 0 1.5rem 0;
+        padding: 0.75rem;
+    }
+
+    .toc-container h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.4rem;
+    }
+
+    .toc-container li {
+        font-size: 1rem;
+        margin: 0.4rem 0;
+    }
+
+    .toc-container a {
+        font-size: 1rem;
+    }
+
+    .alongside-toc {
+        margin-right: 0;
+    }
+}

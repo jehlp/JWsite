@@ -10,9 +10,13 @@
 
 const updateTheme = (theme) => {
     document.documentElement.setAttribute('data-theme', theme);
-    const themeIcon = document.querySelector('.theme-toggle i');
-    if (themeIcon) {
-        themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        themeToggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
     }
 }
 

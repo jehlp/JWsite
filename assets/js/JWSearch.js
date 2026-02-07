@@ -1,14 +1,15 @@
 /**
  * File: JWSearch.js
- * The JavaScript file is used to implement a search functionality in a webpage.
- * It fetches all tags and entry data from the webpage's elements.
- * It generates HTML for search suggestions based on the user's search term.
- * It handles click events on the suggestion items, redirecting the user to the clicked item's URL.
- * It shows or hides the search suggestions based on the user's interaction with the search input.
- * The search functionality is initialized when the webpage's content is fully loaded.
+ * Implements search functionality for the webpage.
+ * Caches tags and entry data on page load for efficient searching.
+ * Generates suggestions based on title and tag matches.
  */
 
+let cachedTags = null;
+let cachedEntries = null;
+
 const getAllTags = () => {
+    if (cachedTags) return cachedTags;
     const tagSet = new Set();
     document.querySelectorAll('.entry-item').forEach(entry => {
         const tags = entry.getAttribute('data-tags');
@@ -16,12 +17,14 @@ const getAllTags = () => {
             tags.split(',').forEach(tag => tagSet.add(tag.trim()));
         }
     });
-    return Array.from(tagSet);
+    cachedTags = Array.from(tagSet);
+    return cachedTags;
 };
 
 const getEntryData = () => {
+    if (cachedEntries) return cachedEntries;
     const allEntries = document.querySelectorAll('.entry-item');
-    return Array.from(allEntries).map(entry => {
+    cachedEntries = Array.from(allEntries).map(entry => {
         const link = entry.querySelector('a');
         const entryTags = (entry.getAttribute('data-tags') || '').split(',').map(tag => tag.trim());
         return {
@@ -30,6 +33,7 @@ const getEntryData = () => {
             tags: entryTags
         };
     });
+    return cachedEntries;
 };
 
 const generateSuggestionHTML = (title, url, type = '', matchingTag = '') => {
@@ -50,13 +54,17 @@ const generateSuggestionHTML = (title, url, type = '', matchingTag = '') => {
 const handleSuggestionClick = suggestionItems => {
     suggestionItems.forEach(item => {
         item.addEventListener('click', () => {
-            window.location.href = item.getAttribute('data-url');
+            const url = item.getAttribute('data-url');
+            if (url) {
+                window.location.href = url;
+            }
         });
     });
 };
 
 const showSuggestions = (searchTerm) => {
     const suggestionsDiv = document.getElementById('search-suggestions');
+    if (!suggestionsDiv) return;
     if (!searchTerm) {
         suggestionsDiv.classList.remove('active');
         return;
@@ -96,17 +104,21 @@ const hideSuggestions = () => {
 
 const initializeSearch = () => {
     const searchInput = document.getElementById('content-search');
-    if (searchInput) {
-        searchInput.addEventListener('input', event => {
-            const searchTerm = event.target.value.toLowerCase();
-            showSuggestions(searchTerm);
-        });
-        document.addEventListener('click', event => {
-            if (!event.target.closest('.search-container')) {
-                hideSuggestions();
-            }
-        });
-    }
+    if (!searchInput) return;
+
+    // Pre-cache data on page load
+    getAllTags();
+    getEntryData();
+
+    searchInput.addEventListener('input', event => {
+        const searchTerm = event.target.value.toLowerCase();
+        showSuggestions(searchTerm);
+    });
+    document.addEventListener('click', event => {
+        if (!event.target.closest('.search-container')) {
+            hideSuggestions();
+        }
+    });
 };
 
 document.addEventListener('DOMContentLoaded', initializeSearch);

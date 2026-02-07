@@ -1,18 +1,57 @@
 /**
  * File: JWDropcap.js
- * Listens for the DOMContentLoaded event to ensure the HTML is fully loaded before execution
- * Defines a function, applyDropcaps, to apply a dropcap style to specified letters
- * Uses a regular expression to find instances of ":big(letter):" in the HTML
- * Replaces these instances with a span element with the class "dropcap", wrapping the specified letter
+ * Applies dropcap styling to specified letters using :big(letter): syntax
+ * Uses TreeWalker for efficient DOM traversal without destroying event listeners
  */
 
 const applyDropcaps = () => {
     const dropcapRegex = /:big\((\w)\):/g;
-    document.body.innerHTML = document.body.innerHTML.replace(dropcapRegex, (match, letter) => {
-        return `<span class="dropcap">${letter}</span>`;
+
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null
+    );
+
+    const nodesToProcess = [];
+    let node;
+
+    while ((node = walker.nextNode())) {
+        if (dropcapRegex.test(node.textContent)) {
+            nodesToProcess.push(node);
+        }
+        dropcapRegex.lastIndex = 0;
+    }
+
+    nodesToProcess.forEach(textNode => {
+        const fragment = document.createDocumentFragment();
+        let lastIndex = 0;
+        let match;
+        const text = textNode.textContent;
+
+        dropcapRegex.lastIndex = 0;
+
+        while ((match = dropcapRegex.exec(text)) !== null) {
+            if (match.index > lastIndex) {
+                fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+            }
+
+            const span = document.createElement('span');
+            span.className = 'dropcap';
+            span.textContent = match[1];
+            fragment.appendChild(span);
+
+            lastIndex = dropcapRegex.lastIndex;
+        }
+
+        if (lastIndex < text.length) {
+            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+        }
+
+        textNode.parentNode.replaceChild(fragment, textNode);
     });
 };
-   
+
 document.addEventListener("DOMContentLoaded", () => {
     applyDropcaps();
 });

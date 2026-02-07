@@ -1,9 +1,15 @@
 /**
  * File: JWThemeInit.js
- * Sets the theme of the website based on the user's previous selection
- * If no previous selection is found, it defaults to 'dark' theme
- * This theme setting is stored in the user's local storage for future visits
- * The theme is applied to the root element of the document.
+ * Sets the theme of the website based on the user's previous selection.
+ * If no previous selection is found, it defaults to 'dark' theme.
+ * This runs immediately to prevent flash of wrong theme.
  */
 
-(() => document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark'))();
+(() => {
+    try {
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+    } catch {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+})();

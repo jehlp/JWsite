@@ -55,12 +55,12 @@ pre code {
     color: var(--syntax-function); 
 }
 
-.highlight .o, .highlight .p { 
-    color: var(--syntax-operator); 
+.highlight .o {
+    color: var(--syntax-operator);
 }
 
-.highlight .p, .highlight .pi { 
-    color: var(--syntax-punctuation); 
+.highlight .p, .highlight .pi {
+    color: var(--syntax-punctuation);
 }
 
 @media (max-width: 768px) {

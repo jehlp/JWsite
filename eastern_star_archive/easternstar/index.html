@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eastern Star</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0b0b0b;
+            color: #e8e8e8;
+            font-family: "Space Grotesk", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        input {
+            width: 320px;
+            padding: 12px;
+            font-size: 1.2em;
+            border: none;
+            border-bottom: 2px solid #666;
+            background: transparent;
+            color: #fff;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #0af;
+            outline: none;
+        }
+
+        #message {
+            margin-top: 25px;
+            font-size: 1.2em;
+            color: #0af;
+            min-height: 1.4em;
+        }
+
+        ::placeholder {
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <input id="answer" type="text" placeholder="Enter your answer...">
+    <div id="message"></div>
+
+    <script>
+        const responses = {
+            "caelum": "correct!",
+            "cutter": "Almost there!",
+            "xioslc": "These letters are correct. Is there a better way to order them?",
+            "colsix": "Keep going!",
+            "needbayerdes": "Keep going!",
+        };
+
+        const input = document.getElementById("answer");
+        const message = document.getElementById("message");
+
+        input.focus();
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                const text = input.value.trim().toLowerCase();
+                message.textContent = responses[text] || "";
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -14,17 +14,17 @@ defaults:
     path: ''
     type: essays
   values:
-    layout: post
+    layout: default
 - scope:
     path: ''
     type: puzzles
   values:
-    layout: post
+    layout: puzzle
 - scope:
     path: ''
     type: technical
   values:
-    layout: post
+    layout: default
 highlighter: rouge
 kramdown:
   syntax_highlighter: rouge

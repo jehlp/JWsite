@@ -1,3 +1,21 @@
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--bg-color);
+    color: var(--link-color);
+    padding: 8px 16px;
+    z-index: 10000;
+    border: 1px solid var(--border-color);
+    border-radius: 0 0 4px 0;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+    color: var(--link-hover);
+}
+
 body {
     font-family: var(--sans-font) !important;
     font-size: 18px;

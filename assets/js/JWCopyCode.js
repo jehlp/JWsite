@@ -18,7 +18,7 @@ const createCopyButton = () => {
 };
 
 const wrapCodeBlock = (pre) => {
-    if (!pre.parentNode.classList.contains('code-wrapper')) {
+    if (pre.parentNode && !pre.parentNode.classList.contains('code-wrapper')) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('code-wrapper');
         wrapper.style.position = 'relative';
@@ -42,12 +42,19 @@ const addCopyButtonsToCodeBlocks = () => {
             const clonedPre = pre.cloneNode(true);
             clonedPre.querySelectorAll('.lineno').forEach((lineNumber) => lineNumber.remove());
             const codeWithoutLineNumbers = clonedPre.textContent;
-            navigator.clipboard.writeText(codeWithoutLineNumbers).then(() => {
-                copyButton.innerHTML = '<i class="fas fa-check"></i>';
-                setTimeout(() => {
-                    copyButton.innerHTML = '<i class="fas fa-copy"></i>';
-                }, 2000);
-            });
+            navigator.clipboard.writeText(codeWithoutLineNumbers)
+                .then(() => {
+                    copyButton.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                    }, 2000);
+                })
+                .catch(() => {
+                    copyButton.innerHTML = '<i class="fas fa-times"></i>';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                    }, 2000);
+                });
         });
     });
 };

@@ -6,12 +6,12 @@
     <script src="{{ '/assets/js/JWThemeInit.js' | relative_url }}"></script>
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/JWMain.css' | relative_url }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Work+Sans:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     {% seo %}
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="container">
         <nav class="nav">
             <div class="nav-links">
@@ -19,39 +19,39 @@
                     <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
                 {% endfor %}
             </div>
-            <button class="theme-toggle" aria-label="Toggle theme">
+            <button class="theme-toggle" aria-label="Toggle theme" aria-pressed="false">
                 <i class="fas fa-sun"></i>
             </button>
         </nav>
 
         <div class="content-area">
-            <main>
+            <main id="main-content">
                 {{ content }}
             </main>
         </div>
 
         <footer>
             <div class="footer-content">
-                <div class="download-button">
+                <button class="download-button" type="button" aria-label="Download page as PDF">
                     <i class="fas fa-file-pdf"></i>
                     <span>Download PDF</span>
-                </div>
+                </button>
             </div>
         </footer>
     </div>
     <script>
         window.page_tags = {{ page.tags | jsonify }};
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-    <script src="{{ '/assets/js/JWTheme.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWFootnotes.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWDownloadPage.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWCopyCode.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWTableOfContents.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWImage.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWTags.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/JWDropcap.js' | relative_url }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js" defer></script>
+    <script src="{{ '/assets/js/JWTheme.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWFootnotes.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWDownloadPage.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWCopyCode.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWTableOfContents.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWImage.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWTags.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/JWDropcap.js' | relative_url }}" defer></script>
 </body>
 </html>

@@ -82,12 +82,19 @@ const addSubListToSection = (section) => {
     return subList;
 };
 
+const getHeadingLevel = (tagName) => {
+    const levels = { H1: 1, H2: 2, H3: 3, H4: 4, H5: 5, H6: 6 };
+    return levels[tagName] || 0;
+};
+
 const hasSubsections = (headings, index, tagName) => {
+    const currentLevel = getHeadingLevel(tagName);
     for (let i = index + 1; i < headings.length; i++) {
-        if (headings[i].tagName > tagName) {
+        const nextLevel = getHeadingLevel(headings[i].tagName);
+        if (nextLevel > currentLevel) {
             return true;
         }
-        if (headings[i].tagName <= tagName) {
+        if (nextLevel <= currentLevel) {
             break;
         }
     }
